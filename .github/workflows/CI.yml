@@ -36,8 +36,6 @@ jobs:
           args: --release --out dist --find-interpreter
           sccache: 'true'
           manylinux: auto
-          before-script-linux: |
-            yum install -y libssl-dev
       - name: Upload wheels
         uses: actions/upload-artifact@v3
         with:
@@ -98,9 +96,6 @@ jobs:
         with:
           command: sdist
           args: --out dist
-          before-script-linux: |
-            sudo apt-get update &&
-            sudo apt-get install -y libssl-dev
       - name: Upload sdist
         uses: actions/upload-artifact@v3
         with:
