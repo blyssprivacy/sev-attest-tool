@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target: [x86_64, aarch64, armv7]
+        target: [x86_64]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
@@ -36,6 +36,8 @@ jobs:
           args: --release --out dist --find-interpreter
           sccache: 'true'
           manylinux: auto
+          before-script-linux: |
+            yum install -y libssl-dev
       - name: Upload wheels
         uses: actions/upload-artifact@v3
         with:
@@ -96,6 +98,9 @@ jobs:
         with:
           command: sdist
           args: --out dist
+          before-script-linux: |
+            sudo apt-get update &&
+            sudo apt-get install -y libssl-dev
       - name: Upload sdist
         uses: actions/upload-artifact@v3
         with:
