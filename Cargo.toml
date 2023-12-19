@@ -18,7 +18,7 @@ name = "sev_attest_tool"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-pyo3 = "0.19.0"
+pyo3 = {version = "0.19.0", optional = true }
 sev = { version = "1.2.1", features = ["openssl"] }
 openssl = "0.10.57"
 serde = "1.0.0"
@@ -27,3 +27,7 @@ clap = { version = "4.4.2", features = ["derive"] }
 reqwest = { version = "0.11.20", features = ["blocking"] }
 hex = "0.4.3"
 base64 = "0.21.5"
+
+[features]
+default = ["python"]
+python = ["pyo3"]
