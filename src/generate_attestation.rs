@@ -1,8 +1,11 @@
-use base64::{engine::general_purpose, Engine as _};
 use serde::Serialize;
+
 use sev::firmware::guest::*;
 
+#[cfg(not(feature = "skip-generation"))]
 use crate::verify_attestation::*;
+#[cfg(not(feature = "skip-generation"))]
+use base64::{engine::general_purpose, Engine as _};
 
 #[derive(Debug, Serialize)]
 struct AugementedReport {
@@ -12,8 +15,14 @@ struct AugementedReport {
     vcek: String,
 }
 
+#[cfg(feature = "skip-generation")]
+pub fn generate_attestation_report(_data_to_attach: Option<String>) -> String {
+    panic!("Cannot generate attestation report when the 'skip-generation' feature is enabled");
+}
+
 /// Requests an AMD-SEV attestation from the CPU, and returns the report
 /// as a JSON string.
+#[cfg(not(feature = "skip-generation"))]
 pub fn generate_attestation_report(data_to_attach: Option<String>) -> String {
     // This is the data we are attaching to the attestation request.
     // It is typically a public key that we want to prove was generated
