@@ -19,7 +19,7 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 pyo3 = {version = "0.19.0", optional = true }
-sev = { version = "1.2.1", features = ["openssl"] }
+sev = { version = "2.0.2", features = ["openssl"] }
 openssl = "0.10.57"
 serde = "1.0.0"
 serde_json = "1.0.0"
